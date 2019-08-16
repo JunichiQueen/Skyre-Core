@@ -11,6 +11,8 @@ mongoose.connect('mongodb://localhost:27017/', { newUrlParser: true }).then(
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
+app.use('./Citizen', citizen);
+
 const port = process.env.PORT || 5000;
 
 app.listen(port, () => console.log(`server running on port ${port}`));
