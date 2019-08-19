@@ -1,17 +1,21 @@
 const express = require('express');
-const mongoose = require('mongoose');
+//const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const app = express();
 
-mongoose.connect('mongodb://localhost:27017/', { newUrlParser: true }).then(
-    () => { console.log("connection ready")},
-    (err) => { console.log(err)}
-);
+const citizen = require('./routes/citizen');
+
+// mongoose.connect('mongodb://localhost:27017/', { newUrlParser: true }).then(
+//     () => { console.log("connection ready")},
+//     (err) => { console.log(err)}
+// );
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
-app.use('./Citizen', citizen);
+app.use('/Citizen', citizen);
+// citizen.initialize(app);
+
 
 const port = process.env.PORT || 5000;
 
