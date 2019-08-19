@@ -1,17 +1,21 @@
 const express = require('express');
 const router = express.Router();
-const Citizen = require('../models/citizenSchema');
+//const Citizen = require('../models/citizenSchema');
+const querystring = require('querystring');
+const requestify = require('requestify');
+const axios = require('axios');
 
-router.get('/getCitizens?forenames=jun&surname=Awesomo&', (req, res) => {
-    Citizen.find()
-    .then(citizens => {
-        if (!citizens) {
-            errors.noCitizens = "There are no citizens";
-            res.status(404).json(errors);
-        }
-        res.json(citizens);
-    })
-    .catch(err => console.log(err));    
+router.get('/getCitizens/:entry', (req, res) => {
+    let appender = req.params.entry;
+    
+    axios
+    .get(`http://localhost:8081/Citizen/getCitizens?${appender}`)
+    .then(response => {
+        res.json(response.data);
+    }).catch(err => {
+        console.log(err);
+    });
+ 
 });
 
 module.exports = router;
